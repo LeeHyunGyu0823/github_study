@@ -24,6 +24,7 @@ class ProfileCreateView(CreateView):
     def get_success_url(self):
         return reverse('accountapp:detail', kwargs={'pk': self.object.user.pk})
 
+
 @method_decorator(profile_ownership_required, 'get')
 @method_decorator(profile_ownership_required, 'post')
 class ProfileUpdateView(UpdateView):
@@ -31,7 +32,6 @@ class ProfileUpdateView(UpdateView):
     context_object_name = 'target_profile'
     form_class = ProfileCreationForm
     template_name = 'profileapp/update.html'
-
 
     def get_success_url(self):
         return reverse('accountapp:detail', kwargs={'pk': self.object.user.pk})

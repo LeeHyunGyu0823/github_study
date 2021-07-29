@@ -13,7 +13,6 @@ from accountapp.decorators import account_ownership_required
 from accountapp.forms import accountCreationForm
 from accountapp.models import HelloWorld
 
-has_ownership = [login_required, account_ownership_required]
 
 @login_required
 def hello_world(request):
@@ -25,8 +24,8 @@ def hello_world(request):
         return HttpResponseRedirect(reverse('accountapp:hello_world'))
     else:
         hello_world_list = HelloWorld.objects.all()
-        return render(request, "accountapp/Base_content.html",
-                      context={"hello_world_list":hello_world_list})
+        return render(request, 'accountapp/hello_world.html',
+                      context={'hello_world_list': hello_world_list})
 
 
 class AccountCreateView(CreateView):
@@ -36,11 +35,14 @@ class AccountCreateView(CreateView):
     template_name = 'accountapp/create.html'
 
 
-
 class AccountDetailView(DetailView):
     model = User
     context_object_name = 'target_user'
     template_name = 'accountapp/detail.html'
+
+
+has_ownership = [login_required, account_ownership_required]
+
 
 @method_decorator(has_ownership, 'get')
 @method_decorator(has_ownership, 'post')
@@ -52,6 +54,7 @@ class AccountUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('accountapp:detail', kwargs={'pk': self.object.pk})
+
 
 @method_decorator(has_ownership, 'get')
 @method_decorator(has_ownership, 'post')
