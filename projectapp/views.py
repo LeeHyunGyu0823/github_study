@@ -44,7 +44,6 @@ class ProjectDetailView(DetailView, MultipleObjectMixin):
                                         subscription=subscription,
                                         **kwargs)
 
-@method_decorator(login_required, 'get')
 class ProjectListView(ListView):
     model = Project
     context_object_name = 'project_list'
